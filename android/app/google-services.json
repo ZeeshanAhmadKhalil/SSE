@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "653216754536",
+    "project_id": "sseapp-2021",
+    "storage_bucket": "sseapp-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653216754536:android:5b72ec0b5822b23da644dd",
+        "android_client_info": {
+          "package_name": "com.sse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653216754536-tlpt8krvqg6qmth90rolfoj9f8vpbf8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm6D_74ElBbhO3F978BBL4W4QsLX1L2yY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653216754536-tlpt8krvqg6qmth90rolfoj9f8vpbf8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
