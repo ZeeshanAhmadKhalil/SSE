@@ -3,15 +3,22 @@ import {
     applyMiddleware
 } from 'redux'
 import thunk from 'redux-thunk'
-const middleware = [thunk]
+
+const middlewares = [thunk]
 
 import rootReducer from './Reducers'
 const initialState = {}
 
+if (__DEV__) {
+    const createDebugger = require('redux-flipper').default;
+    middlewares.push(createDebugger());
+}
+
+
 const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(...middleware)
+    applyMiddleware(...middlewares)
 )
 
 export default store
