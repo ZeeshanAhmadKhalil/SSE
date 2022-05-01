@@ -186,21 +186,6 @@ function Login(props) {
                                     returnKeyType='done'
                                     blurOnSubmit={true}
                                 />
-                                {/* <View style={{ height: 70, borderColor: 'red', borderWidth: 0, flexDirection: "row", marginTop: 10 }}>
-                            <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, flexDirection: "row" }}>
-                                <Checkbox
-                                    color={mainColor}
-                                    uncheckedColor={modalBorderColor}
-                                    status={false}
-                                    onPress={() => {
-                                    }}
-                                />
-                                <Text style={{ color: textColor, fontSize: 14, marginTop: 8 }}>Remember me</Text>
-                            </View>
-                            <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, alignItems: "flex-end" }}>
-                                <Text style={{ color: mainColor, fontSize: 14, marginTop: 8 }}>Forgot Password?</Text>
-                            </View>
-                        </View> */}
                                 <Button
                                     onPress={() => {
                                         console.log("LoggingIn")
