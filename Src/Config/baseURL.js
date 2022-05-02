@@ -10,6 +10,6 @@ import {
     CJ_BASE_URL,
 } from 'react-native-dotenv' //todo: https://github.com/goatandsheep/react-native-dotenv/issues/52#issuecomment-780561293
 
-export const baseURL = BASE_URL_SERVER
+export const baseURL = BASE_URL_HOME2
 export const cloudinaryURL = URL_CLOUDINARY
 export const cjBaseUrl = CJ_BASE_URL

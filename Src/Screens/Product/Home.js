@@ -1,44 +1,27 @@
-import React, { Component, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { View, Text, ScrollView, Dimensions, Image, ImageBackground, TouchableOpacity, StatusBar, RefreshControl, Linking } from 'react-native'
-import Carousel from 'react-native-snap-carousel';
-import { Divider } from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Image, ImageBackground, Linking, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
+    LineChart
 } from "react-native-chart-kit";
-
-import { NavigationContainer, CommonActions, DefaultTheme, useNavigation } from '@react-navigation/native'
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import AntDesign from "react-native-vector-icons/AntDesign"
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Feather from 'react-native-vector-icons/Feather'
-import Foundation from 'react-native-vector-icons/Foundation'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-
+import { Divider } from 'react-native-paper';
+import Carousel from 'react-native-snap-carousel';
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { connect } from 'react-redux';
 import {
     ChangeViewingSellingProductDetails,
     GetHomeData,
-    GetProductById,
+    GetProductById
 } from '../../Store/Actions/productActions';
 import {
     ChangeBottomNavigate,
-    ChangeRightDrawerNavigation,
+    ChangeRightDrawerNavigation
 } from '../../Store/Actions/sharedActions';
-
-import CustomHeader from '../Shared/CustomHeader'
-import BuyingReportDonutChart from '../User/Dashboard/BuyingReportDonutChart'
-import CustomLikeToggle from '../Shared/CustomLikeToggle';
 import CustomCartCount from '../Shared/CustomCartCount';
+import CustomHeader from '../Shared/CustomHeader';
+import CustomLikeToggle from '../Shared/CustomLikeToggle';
+import BuyingReportDonutChart from '../User/Dashboard/BuyingReportDonutChart';
 
 const screenWidth = Dimensions.get("window").width;
 const SLIDER_WIDTH = Dimensions.get('window').width;
@@ -607,7 +590,7 @@ function Home(props) {
                     </>
                 }
                 {/* {RenderGraphs()} */}
-                {fiveProductsToSell.length != 0 &&
+                {cjProducts.length != 0 &&
                     <>
                         <TouchableOpacity
                             style={{ width: '100%', flexDirection: "row", borderColor: 'red', borderWidth: 0, marginTop: 15 }}

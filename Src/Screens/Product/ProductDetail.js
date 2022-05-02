@@ -1,34 +1,25 @@
 import React from 'react';
-import { Dimensions, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { SliderBox } from "react-native-image-slider-box";
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import MapView, { Marker } from 'react-native-maps';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import {
-    ExchangeProducts,
     GetProductById,
-    GetProductsToExchange,
+    GetProductsToExchange
 } from '../../Store/Actions/productActions';
 import {
-    ChangeShowMyProductsToExchangePannel,
-    ChangeShowExchangeProductPannel,
+    ChangeShowExchangeProductPannel, ChangeShowMyProductsToExchangePannel
 } from '../../Store/Actions/sharedActions';
 import CustomCartCount from '../Shared/CustomCartCount';
 import CustomLikeToggle from '../Shared/CustomLikeToggle';
 import ExchangeProduct from './ExchangeProduct';
 import ProductsToExchange from './ProductsToExchange';
-
-
-
-
-
-const screenWidth = Dimensions.get("window").width;
 
 function ProductDetail(props) {
     const {
@@ -98,8 +89,10 @@ function ProductDetail(props) {
         productName,
         quantity,
         user,
-        _id
-    } = product
+        longitude,
+        latitude,
+        _id,
+    } = product || {}
 
     console.log("RIGHTDRAWERNAVIGATION");
     console.log(rightDrawerNavigation);
@@ -131,7 +124,7 @@ function ProductDetail(props) {
                                 </View>
                             </View>
                             <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "flex-end", alignItems: "flex-end" }}>
-                                {userData?.userModel?._id != user ?
+                                {userData?.userModel?._id != user &&
                                     <View
                                         style={{
                                             height: 25,
@@ -153,22 +146,6 @@ function ProductDetail(props) {
                                         />
 
                                     </View>
-                                    :
-                                    // <View
-                                    //     style={{
-                                    //         height: 25,
-                                    //         width: 25,
-                                    //         borderRadius: 25,
-                                    //         backgroundColor: modalColor,
-                                    //         marginRight: 5,
-                                    //         marginBottom: 5,
-                                    //         justifyContent: "center",
-                                    //         alignItems: "center",
-                                    //     }}
-                                    // >
-                                    //     <MaterialCommunityIcons name="delete" size={18} color={dangerColor} style={{}} />
-                                    // </View>
-                                    null
                                 }
                             </View>
                         </ImageBackground>
@@ -239,7 +216,7 @@ function ProductDetail(props) {
                         <Text style={{ color: textColor, fontSize: 25, fontWeight: "bold" }}>{productName}</Text>
                     </View>
                     <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "center", alignItems: "flex-end", borderColor: 'red', borderWidth: 0 }}>
-                        {userData?.userModel?._id != user._id ?
+                        {userData?.userModel?._id != user._id &&
                             <View
                                 style={{
                                     height: 40,
@@ -258,21 +235,6 @@ function ProductDetail(props) {
                                     noStyle={true}
                                 />
                             </View>
-                            :
-                            <TouchableOpacity
-                                style={{
-                                    height: 40,
-                                    width: 40,
-                                    borderRadius: 40,
-                                    backgroundColor: mainColor + "44",
-                                    marginRight: 0,
-                                    marginBottom: 0,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                }}
-                            >
-                                {/* <MaterialCommunityIcons name="delete" size={25} color={dangerColor} style={{}} /> */}
-                            </TouchableOpacity>
                         }
                     </View>
                 </View>
@@ -330,21 +292,65 @@ function ProductDetail(props) {
                 />
                 <Text style={{ color: textColor, fontSize: 16, fontWeight: "bold" }}>{`Cost ${price} /-`}</Text>
                 <Text style={{ color: textOffColor, fontSize: 12, fontWeight: "normal", textAlign: "justify", }}>{`${condition.conditionName} ${category.categoryName}`}</Text>
-                <TouchableOpacity
-                    style={{ width: '100%', flexDirection: "row", borderColor: 'red', borderWidth: 0, marginTop: 10 }}
-                    onPress={() => props.navigation.navigate("Products")}
-                >
-                    <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "center" }}>
-                        <Text numberOfLines={1} style={{ color: textColor, fontSize: 16, fontWeight: "bold" }}>Other {category.categoryName}</Text>
-                    </View>
-                    <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, alignItems: "center", justifyContent: "flex-end", flexDirection: "row" }}>
-                        <Text style={{ color: textOffColor, fontSize: 12, fontWeight: "normal", marginRight: 2 }}>See all</Text>
-                        <AntDesign name="right" color={textOffColor} size={12} style={{}} />
-                    </View>
-                </TouchableOpacity>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ borderColor: 'red', borderWidth: 0, marginTop: 10, marginBottom: 90 }}>
-                    {RenderSimilarCategoryProducts()}
-                </ScrollView>
+                {productsWithSameCategory.length > 0 &&
+                    <>
+                        <TouchableOpacity
+                            style={{ width: '100%', flexDirection: "row", borderColor: 'red', borderWidth: 0, marginTop: 10 }}
+                            onPress={() => props.navigation.navigate("Products")}
+                        >
+                            <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "center" }}>
+                                <Text numberOfLines={1} style={{ color: textColor, fontSize: 16, fontWeight: "bold" }}>Other {category.categoryName}</Text>
+                            </View>
+                            <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, alignItems: "center", justifyContent: "flex-end", flexDirection: "row" }}>
+                                {/* <Text style={{ color: textOffColor, fontSize: 12, fontWeight: "normal", marginRight: 2 }}>See all</Text>
+                        <AntDesign name="right" color={textOffColor} size={12} style={{}} /> */}
+                            </View>
+                        </TouchableOpacity>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ borderColor: 'red', borderWidth: 0, marginTop: 10, marginBottom: (longitude && latitude) ? 20 : 90 }}>
+                            {RenderSimilarCategoryProducts()}
+                        </ScrollView>
+                    </>
+                }
+                {(longitude && latitude) &&
+                    <>
+                        <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "center", marginBottom: 10 }}>
+                            <Text numberOfLines={1} style={{ color: textColor, fontSize: 16, fontWeight: "bold" }}>Location on map</Text>
+                        </View>
+                        <View
+                            style={{
+                                height: 300,
+                                width: '100%',
+                                marginBottom: 90,
+                                borderRadius: 10,
+                                overflow: "hidden",
+                                borderColor: 'red', borderWidth: 0,
+                            }}
+                        >
+                            <MapView
+                                style={{
+                                    height: '100%',
+                                    width: '100%',
+                                }}
+                                initialRegion={{
+                                    latitude,
+                                    longitude,
+                                    latitudeDelta: 0.0922,
+                                    longitudeDelta: 0.0421,
+                                }}
+                            >
+                                <Marker
+                                    key={0}
+                                    coordinate={{
+                                        latitude,
+                                        longitude,
+                                    }}
+                                    title={productName}
+                                    description={null}
+                                />
+                            </MapView>
+                        </View>
+                    </>
+                }
             </ScrollView>
             {userData?.userModel?._id != user._id &&
                 <View style={{

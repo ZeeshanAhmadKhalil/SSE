@@ -1,66 +1,59 @@
-import Clarifai from 'clarifai'
-
-import Toast, { BaseToast } from 'react-native-toast-message'
-import ImagePicker from 'react-native-image-crop-picker' // todo: Upgrade gradle to 4.0.1 https://github.com/ivpusic/react-native-image-crop-picker/issues/1416#issuecomment-700644075
-
-import store from '../'
+import Clarifai from 'clarifai';
+import Geolocation from 'react-native-geolocation-service';
+import ImagePicker from 'react-native-image-crop-picker'; // todo: Upgrade gradle to 4.0.1 https://github.com/ivpusic/react-native-image-crop-picker/issues/1416#issuecomment-700644075
+import Toast from 'react-native-toast-message';
+import store from '../';
 import {
-    baseURL,
-    cloudinaryURL,
-    cjBaseUrl,
-} from '../../Config/baseURL'
+    cjAccessAey, cjEmail, clarifaiApiKey
+} from '../../Config/apiKeys';
 import {
-    clarifaiApiKey,
-    recombeeDbPrivateToken,
-    recombeeDbId,
-    cjEmail,
-    cjAccessAey,
-} from '../../Config/apiKeys'
-
+    baseURL, cjBaseUrl, cloudinaryURL
+} from '../../Config/baseURL';
+import { GetLocation, GetLocationPermission } from '../../Config/Helper';
 import {
-    CHANGE_PRODUCT_SEARCH_QUERY,
-    CHANGE_IS_FOR_EXCHANGE,
-    CHANGE_IS_CITY_OPEN,
-    CHANGE_CITY_VALUE,
-    CHANGE_CATEGORY_VALUE,
-    CHANGE_IS_CATEGORY_OPEN,
-    CHANGE_CONDITION_VALUE,
-    CHANGE_IS_CONDITION_OPEN,
     ADD_PRODUCT_IMAGES,
-    CHANGE_VIEWING_SELLING_PRODUCT_DETAILS,
-    CHANGE_CONDITION_LIST,
+    CHANGE_BALANCE,
     CHANGE_CATEGORY_LIST,
+    CHANGE_CATEGORY_VALUE,
     CHANGE_CITY_LIST,
-    CHANGE_LOADER,
-    REMOVE_PRODUCT_IMAGES,
-    CHANGE_PRODUCTS_TO_SELL,
+    CHANGE_CITY_VALUE,
+    CHANGE_CJPRODUCTS,
+    CHANGE_CONDITION_LIST,
+    CHANGE_CONDITION_VALUE,
     CHANGE_EXCHANGE_TO_SELL,
-    CHANGE_MOSTLY_LIKED_PRODUCTS,
     CHANGE_FIVE_PRODUCTS_TO_EXCHANGE,
     CHANGE_FIVE_PRODUCTS_TO_SELL,
-    CHANGE_PRODUCT_DETAIL,
-    CHANGE_PRODUCT_DETAIL_IMAGES,
-    CHANGE_PRODUCTS_WITHSAME_CATEGORY,
+    CHANGE_IS_CATEGORY_OPEN,
+    CHANGE_IS_CITY_OPEN,
+    CHANGE_IS_CONDITION_OPEN,
+    CHANGE_IS_FOR_EXCHANGE,
+    CHANGE_LOADER,
+    CHANGE_MOSTLY_LIKED_PRODUCTS,
     CHANGE_MY_PRODUCTS,
-    CHANGE_SHOW_MY_PRODUCTS_PANNEL,
-    LIKE_PRODUCT,
-    CHANGE_SHOW_WISH_LIST_PANNEL,
+    CHANGE_MY_PRODUCTS_TO_EXCHANGE,
     CHANGE_MY_WISHLIST,
-    CHANGE_SHOPPING_CART,
-    CHANGE_SEARCHED_PRODUCTS,
-    CHANGE_BALANCE,
-    ORDER_PRODUCTS,
-    CHANGE_SHOW_ORDER_PANNEL,
     CHANGE_ORDERS,
     CHANGE_ORDER_DETAIL,
-    CHANGE_MY_PRODUCTS_TO_EXCHANGE,
-    CHANGE_SHOW_PRODUCTS_TO_EXCHANGE_PANNEL,
-    CHANGE_SHOW_EXCHANGE_PRODUCT_PANNEL,
-    CHANGE_REQUESTING_EXCHANGES,
-    CHANGE_REQUESTED_EXCHANGES,
+    CHANGE_PRODUCTS_TO_SELL,
+    CHANGE_PRODUCTS_WITHSAME_CATEGORY,
+    CHANGE_PRODUCT_DETAIL,
+    CHANGE_PRODUCT_DETAIL_IMAGES,
+    CHANGE_PRODUCT_SEARCH_QUERY,
     CHANGE_RECOMMENDED_PRODUCTS,
-    CHANGE_CJPRODUCTS,
-} from '../Actions/types'
+    CHANGE_REQUESTED_EXCHANGES,
+    CHANGE_REQUESTING_EXCHANGES,
+    CHANGE_SEARCHED_PRODUCTS,
+    CHANGE_SHOPPING_CART,
+    CHANGE_SHOW_EXCHANGE_PRODUCT_PANNEL,
+    CHANGE_SHOW_MY_PRODUCTS_PANNEL,
+    CHANGE_SHOW_ORDER_PANNEL,
+    CHANGE_SHOW_PRODUCTS_TO_EXCHANGE_PANNEL,
+    CHANGE_SHOW_WISH_LIST_PANNEL,
+    CHANGE_VIEWING_SELLING_PRODUCT_DETAILS,
+    LIKE_PRODUCT,
+    ORDER_PRODUCTS,
+    REMOVE_PRODUCT_IMAGES
+} from '../Actions/types';
 
 //STATE MANAGMENT
 export const ChangeViewingSellingProductDetails = (val) => {
@@ -175,7 +168,6 @@ export const AddLikeProduct = (productId) => {
 }
 
 //FETCH AND DISPATCH
-
 export const ChangeOrderStatus = (orderId, orderStatus, navigate) => {
     return async (dispatch) => {
         try {
@@ -507,6 +499,24 @@ export const PostProduct = (data) => {
 
         dispatch({ type: CHANGE_LOADER, payload: true })
 
+        let productPosition
+
+        if (GetLocationPermission()) {
+            productPosition = await GetLocation().then(position => position)
+        }
+
+        console.log("productPosition--->", productPosition)
+
+        const {
+            accuracy,
+            altitude,
+            altitudeAccuracy,
+            heading,
+            latitude,
+            longitude,
+            speed,
+        } = productPosition?.coords || {}
+
         const token = store.getState().user.userData.token
         const isForExchange = store.getState().product.isForExchange
         const conditionValue = store.getState().product.conditionValue
@@ -529,7 +539,9 @@ export const PostProduct = (data) => {
             "cityId": cityValue,
             "conditionId": conditionValue,
             "images": productImages,
-            "quantity": quantity
+            "quantity": quantity,
+            "longitude": longitude,
+            "latitude": latitude,
         });
 
         var requestOptions = {
@@ -1228,7 +1240,15 @@ export const GetHomeData = () => {
             };
 
 
-            let [mostlyLikedProducts, sellingProducts, exchangeProducts, shoppingCart, balance, recommendedProducts, cjProducts] = await Promise.all([
+            let [
+                mostlyLikedProducts,
+                sellingProducts,
+                exchangeProducts,
+                shoppingCart,
+                balance,
+                recommendedProducts,
+                cjProducts
+            ] = await Promise.all([
                 fetch(baseURL + "/Api/Product/GetMostlyLikedProducts", requestOptions).then(response => response.json().then(data => ({ status: response.status, data, }))),
                 fetch(baseURL + "/Api/Product/GetSellingProducts?limit=5&skip=0", requestOptions).then(response => response.json().then(data => ({ status: response.status, data, }))),
                 fetch(baseURL + "/Api/Product/GetExchangeProducts?limit=5&skip=0", requestOptions).then(response => response.json().then(data => ({ status: response.status, data, }))),
