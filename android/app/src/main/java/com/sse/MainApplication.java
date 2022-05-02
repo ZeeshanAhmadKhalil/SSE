@@ -1,4 +1,4 @@
-package com.sse;
+package com.onlineshopping;
 
 import com.facebook.react.bridge.JSIModulePackage; //todo: for reanimate2
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; //todo: for reanimate2
@@ -72,7 +72,7 @@ public class MainApplication extends Application implements ReactApplication {
          * We use reflection here to pick up the class that initializes Flipper,
          * since Flipper library is not available in release mode
          */
-        Class<?> aClass = Class.forName("com.sse.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.onlineshopping.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);
