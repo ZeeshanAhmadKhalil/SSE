@@ -3,11 +3,19 @@ import {
     applyMiddleware
 } from 'redux'
 import thunk from 'redux-thunk'
-
-const middlewares = [thunk]
-
+import { persistStore, persistReducer } from 'redux-persist'
 import rootReducer from './Reducers'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 const initialState = {}
+const middlewares = [thunk]
+const persistConfig = {
+    key: 'root',
+    whitelist: ['home'],
+    storage: AsyncStorage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 if (__DEV__) {
     const createDebugger = require('redux-flipper').default;
@@ -16,7 +24,7 @@ if (__DEV__) {
 
 
 const store = createStore(
-    rootReducer,
+    persistedReducer,
     initialState,
     applyMiddleware(...middlewares)
 )

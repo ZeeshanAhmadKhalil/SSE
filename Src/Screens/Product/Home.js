@@ -88,7 +88,7 @@ function Home(props) {
         fiveProductsToExchange,
         recommendedProducts,
         cjProducts,
-    } = props.product
+    } = props.home
     const {
         userData
     } = props.user
@@ -611,8 +611,8 @@ function Home(props) {
     )
 }
 
-const mapStateToProps = ({ color, product, user, }) => ({
-    color, product, user,
+const mapStateToProps = ({ color, product, user, home, }) => ({
+    color, product, user, home,
 })
 
 export default connect(mapStateToProps, {

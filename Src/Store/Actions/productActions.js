@@ -1,5 +1,4 @@
 import Clarifai from 'clarifai';
-import Geolocation from 'react-native-geolocation-service';
 import ImagePicker from 'react-native-image-crop-picker'; // todo: Upgrade gradle to 4.0.1 https://github.com/ivpusic/react-native-image-crop-picker/issues/1416#issuecomment-700644075
 import Toast from 'react-native-toast-message';
 import store from '../';
