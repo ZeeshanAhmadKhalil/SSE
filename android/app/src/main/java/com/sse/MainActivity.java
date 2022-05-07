@@ -1,4 +1,4 @@
-package com.sse;
+package com.onlineshopping;
 
 import android.os.Bundle; // <- add this necessary import
 

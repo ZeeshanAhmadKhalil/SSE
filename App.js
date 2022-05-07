@@ -1,42 +1,25 @@
-import React, { Component, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { View, Text, ScrollView, StatusBar, Modal, ActivityIndicator, LogBox } from 'react-native'
-import RNBootSplash from "react-native-bootsplash";
-import Toast, { BaseToast } from 'react-native-toast-message'
-
-import { NavigationContainer, CommonActions, DefaultTheme, useNavigation } from '@react-navigation/native'
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import Entypo from 'react-native-vector-icons/Entypo'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Octicons from 'react-native-vector-icons/Octicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Feather from 'react-native-vector-icons/Feather'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Fontisto from 'react-native-vector-icons/Fontisto'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
-import {
-  ChangeNavigation,
-} from './Src/Store/Actions/sharedActions'
-import {
-  GetUserData,
-  ChangeUserData,
-} from './Src/Store/Actions/userActions'
-
-import LeftDrawer from './Src/Screens/LeftDrawer'
-import RightDrawer from './Src/Screens/RightDrawer'
-import ProductDetail from './Src/Screens/Product/ProductDetail'
-import Wallet from './Src/Screens/Wallet/Wallet'
+import React, { useEffect } from 'react';
+import { ActivityIndicator, LogBox, Modal, View } from 'react-native';
+import RNBootSplash from "react-native-bootsplash";
+import { enableLatestRenderer } from 'react-native-maps';
+import Toast, { BaseToast } from 'react-native-toast-message';
+import { connect } from 'react-redux';
+import OrderDetail from './Src/Screens/Product/OrderDetail';
+import ProductDetail from './Src/Screens/Product/ProductDetail';
+import RightDrawer from './Src/Screens/RightDrawer';
+import Dashboard from './Src/Screens/User/Dashboard';
 import Login from './Src/Screens/User/Login';
 import Signup from './Src/Screens/User/Signup';
 import DepositRequests from './Src/Screens/Wallet/DepositRequests';
-import OrderDetail from './Src/Screens/Product/OrderDetail';
-import Dashboard from './Src/Screens/User/Dashboard';
+import {
+  ChangeNavigation
+} from './Src/Store/Actions/sharedActions';
+import {
+  ChangeUserData, GetUserData
+} from './Src/Store/Actions/userActions';
 
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
@@ -105,6 +88,7 @@ function App(props) {
 
   useEffect(() => {
     RNBootSplash.hide({ fade: true }); // fade
+    enableLatestRenderer();
 
     GetUserData().then((data) => {
       console.log("DATA")

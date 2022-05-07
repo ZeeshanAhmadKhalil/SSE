@@ -196,7 +196,7 @@ function DepositRequests(props) {
                         }}
                     >
                         <Text style={{ color: textColor, fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
-                            {"SSE Account Details"}
+                            {"Account Details"}
                         </Text>
                         <Avatar
                             rounded
@@ -212,7 +212,7 @@ function DepositRequests(props) {
                             }}
                         />
                         <Text style={{ color: textColor, fontSize: 16, fontWeight: "bold", marginTop: 6 }}>
-                            {"SSE Account  "}
+                            {"Account  "}
                             <Text style={{ color: textOffColor, fontSize: 10, fontWeight: 'normal' }}> (Account Title)</Text>
                         </Text>
                         <Text style={{ color: textColor, fontSize: 16, fontWeight: "bold", marginTop: 6 }}>

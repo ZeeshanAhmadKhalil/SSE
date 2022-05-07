@@ -42,7 +42,7 @@ export default (state = initialState, { type, payload }) => {
                         accountTitle,
                         amount,
                         bankName,
-                        depositRequestStatus: { depositRequestStatus: "Pending" },
+                        depositRequestStatus: { depositRequestStatus: "Accepted" }, //todo: to include admin write Pending
                         createdOn,
                     }
                 ].concat(state.depositRequests)

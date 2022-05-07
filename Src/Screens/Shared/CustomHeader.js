@@ -1,38 +1,23 @@
-import React, { Component, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
-import { Divider, BottomSheet, ListItem, Avatar, Badge, Icon, withBadge, SearchBar } from 'react-native-elements'
+import React from 'react'
+import { TouchableOpacity, View } from 'react-native'
+import { Badge, SearchBar } from 'react-native-elements'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-
-import { NavigationContainer, CommonActions, DefaultTheme, useNavigation } from '@react-navigation/native'
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-
-import Entypo from 'react-native-vector-icons/Entypo'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import Octicons from 'react-native-vector-icons/Octicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Feather from 'react-native-vector-icons/Feather'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Fontisto from 'react-native-vector-icons/Fontisto'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { connect } from 'react-redux'
 import {
     ChangeProductSearchQuery,
-    GetMyWishList,
-    SearchProducts,
-    SearchByImage,
+    GetMyWishList, SearchByImage, SearchProducts
 } from '../../Store/Actions/productActions'
 import {
-    ChangeShowWalletPannel,
-    ChangeShowWishListPannel,
-    ChangeShowMyProductsPannel,
-} from '../../Store/Actions/sharedActions';
+    ChangeShowMyProductsPannel, ChangeShowWalletPannel,
+    ChangeShowWishListPannel
+} from '../../Store/Actions/sharedActions'
 import {
-    GetTransactions,
-} from '../../Store/Actions/walletActions';
+    GetTransactions
+} from '../../Store/Actions/walletActions'
 
 function CustomHeader(props) {
     const { headerTextColor,
@@ -156,9 +141,9 @@ function CustomHeader(props) {
                                 alignItems: "center",
                                 marginBottom: 2,
                             }}
-                            onPress={() => SearchByImage()}
+                        // onPress={() => SearchByImage()}
                         >
-                            <EvilIcons name="image" size={25} color={textOffColor} style={{ marginLeft: 0 }} />
+                            {/* <EvilIcons name="image" size={25} color={textOffColor} style={{ marginLeft: 0 }} /> */}
                         </TouchableOpacity>
                     </View>
                 </View>

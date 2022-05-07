@@ -8,8 +8,9 @@ import {
     BASE_URL_SERVER,
     URL_CLOUDINARY,
     CJ_BASE_URL,
+    BASE_URL_ONLINE_SHOPPING_SERVER,
 } from 'react-native-dotenv' //todo: https://github.com/goatandsheep/react-native-dotenv/issues/52#issuecomment-780561293
 
-export const baseURL = BASE_URL_SERVER
+export const baseURL = BASE_URL_ONLINE_SHOPPING_SERVER
 export const cloudinaryURL = URL_CLOUDINARY
 export const cjBaseUrl = CJ_BASE_URL
