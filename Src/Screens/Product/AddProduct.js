@@ -1,36 +1,16 @@
-import * as shape from 'd3-shape'
-import moment from 'moment'
-import React, { Component, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { Text, View, StyleSheet, StatusBar, TouchableOpacity, ScrollView, ProgressBarAndroidComponent, Modal, Dimensions, TextInput as ReactTextInput, Platform, BackHandler, RefreshControl, } from 'react-native'
-import { BottomSheet, ListItem } from 'react-native-elements'
-import { Checkbox, HelperText, TextInput, Divider, Switch as PaperSwitch, Button } from 'react-native-paper';
-import DropDownPicker from 'react-native-dropdown-picker';
-import ImagePicker from 'react-native-image-crop-picker' // todo: Upgrade gradle to 4.0.1 https://github.com/ivpusic/react-native-image-crop-picker/issues/1416#issuecomment-700644075
-import ImageModal from 'react-native-image-modal';
-import { useForm, Controller } from "react-hook-form";
-
+import React, { useEffect, useState } from 'react'
+import { Controller, useForm } from "react-hook-form"
+import { Modal, RefreshControl, ScrollView, Text, TextInput as ReactTextInput, TouchableOpacity, View } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
+import ImagePicker from 'react-native-image-crop-picker'; // todo: Upgrade gradle to 4.0.1 https://github.com/ivpusic/react-native-image-crop-picker/issues/1416#issuecomment-700644075
+import ImageModal from 'react-native-image-modal'
+import { Button, Switch as PaperSwitch, TextInput } from 'react-native-paper'
 import Entypo from 'react-native-vector-icons/Entypo'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Octicons from 'react-native-vector-icons/Octicons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Feather from 'react-native-vector-icons/Feather'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Foundation from 'react-native-vector-icons/Foundation'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-
+import { connect } from 'react-redux'
 import {
-    ChangeIsForExchange,
-    ChangeCityValue,
-    ChangeCategoryValue,
-    ChangeConditionValue,
-    AddProductImages,
-    GetAddProductData,
-    PostProduct,
+    AddProductImages, ChangeCategoryValue, ChangeCityValue, ChangeConditionValue, ChangeIsForExchange, GetAddProductData,
+    PostProduct
 } from '../../Store/Actions/productActions'
-
 import CustomHeader from '../Shared/CustomHeader'
 
 function AddProduct(props) {

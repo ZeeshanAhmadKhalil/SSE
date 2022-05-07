@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import cartReducer from './cartReducer'
 import chatReducer from './chatReducer'
 import colorReducer from './colorReducer'
+import homeReducer from './homeReducer'
 import productReducer from './productReducer'
 import sharedReducer from './sharedReducer'
 import userReducer from './userReducer'
@@ -15,4 +16,5 @@ export default combineReducers({
     user: userReducer,
     wallet: walletReducer,
     color: colorReducer,
+    home: homeReducer,
 })
