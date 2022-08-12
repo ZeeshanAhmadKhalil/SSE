@@ -141,9 +141,9 @@ function CustomHeader(props) {
                                 alignItems: "center",
                                 marginBottom: 2,
                             }}
-                        // onPress={() => SearchByImage()}
+                            onPress={() => SearchByImage()}
                         >
-                            {/* <EvilIcons name="image" size={25} color={textOffColor} style={{ marginLeft: 0 }} /> */}
+                            <EvilIcons name="image" size={25} color={textOffColor} style={{ marginLeft: 0 }} />
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -27,6 +27,8 @@ const initialState = {
     graphsBackgroundOpacity: 0.5,
     tilesBackgroundOpacity: "77",
     chartsDividerColor: '#000',
+    fbColor:"#4267B2",
+    twitterColor:"#1DA1F2",
 }
 
 export default (state = initialState, { type, payload }) => {

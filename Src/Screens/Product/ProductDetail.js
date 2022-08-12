@@ -1,8 +1,9 @@
 import React from 'react';
-import { ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, ScrollView, Share, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { SliderBox } from "react-native-image-slider-box";
 import MapView, { Marker } from 'react-native-maps';
+import AntDesign from "react-native-vector-icons/AntDesign";
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -56,8 +57,8 @@ function ProductDetail(props) {
         productsWithSameCategory,
     } = props.product
     const {
-        userData
-    } = props.user
+        userData,
+    } = props.user || {}
     const {
         showMyProductsToExchangePannel,
         showExchangeProductPannel,
@@ -94,8 +95,25 @@ function ProductDetail(props) {
         _id,
     } = product || {}
 
-    console.log("RIGHTDRAWERNAVIGATION");
-    console.log(rightDrawerNavigation);
+    const onShare = async () => {
+        try {
+            const result = await Share.share({
+                message:
+                    `Hi i am ${userData?.userModel?.fullName}, i am using Shop, Search and exchange to sell my product ${productName}. You can search download Shop, Search and exchange from playstore and search my product ${productName} there. Thanks!.`,
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     const RenderSimilarCategoryProducts = () => {
         return productsWithSameCategory.map((item, key) => {
@@ -215,7 +233,23 @@ function ProductDetail(props) {
                         }
                         <Text style={{ color: textColor, fontSize: 25, fontWeight: "bold" }}>{productName}</Text>
                     </View>
-                    <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "center", alignItems: "flex-end", borderColor: 'red', borderWidth: 0 }}>
+                    <View style={{ flex: 1, borderColor: 'red', borderWidth: 0, justifyContent: "flex-end", alignItems: "center", flexDirection: 'row' }}>
+                        <TouchableOpacity
+                            onPress={onShare}
+                            style={{
+                                height: 40,
+                                width: 40,
+                                borderRadius: 40,
+                                backgroundColor: mainColor + "44",
+                                marginRight: 0,
+                                marginBottom: 0,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginRight: 10,
+                            }}
+                        >
+                            <AntDesign name='sharealt' size={20} color={mainLighterColor} />
+                        </TouchableOpacity>
                         {userData?.userModel?._id != user._id &&
                             <View
                                 style={{

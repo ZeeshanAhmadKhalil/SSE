@@ -1,32 +1,16 @@
-import React, { Component, useState } from 'react'
-import { connect } from 'react-redux'
-import { Text, View, StyleSheet, StatusBar, TouchableOpacity, ScrollView, ProgressBarAndroidComponent, Modal, TextInput as ReactTextInput, Dimensions, Image } from 'react-native'
-import { Divider, BottomSheet, ListItem } from 'react-native-elements'
-import { Checkbox, TextInput, Button } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Dimensions, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
-import { SliderBox } from "react-native-image-slider-box";
-import Svg, { Path } from 'react-native-svg';
-
-import { NavigationContainer, CommonActions, DefaultTheme, useNavigation } from '@react-navigation/native'
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-
-import Entypo from 'react-native-vector-icons/Entypo'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Octicons from 'react-native-vector-icons/Octicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Feather from 'react-native-vector-icons/Feather'
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Fontisto from 'react-native-vector-icons/Fontisto'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { Button, TextInput } from 'react-native-paper';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 import {
-    SignIn,
-} from '../../Store/Actions/userActions'
-
-import CustomHeader from '../Shared/CustomHeader'
+    SignIn
+} from '../../Store/Actions/userActions';
 import Wavy from '../Shared/Wavy';
+
+
+
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -34,30 +18,13 @@ function Login(props) {
 
     const {
         mainColor,
-        mainLighterColor,
-        mainlightColorRGB,
         mainDarkerColor,
         backgroundDarkerColor,
         backgroundColor,
-        textLightColor,
         textColor,
-        textOffLightColor,
-        textOffColor,
-        modalColor,
-        modalBorderColor,
-        successColor,
-        successLightColor,
-        dangerColor,
-        warningColor,
+        fbColor,
+        twitterColor,
         headerIconColor,
-        headerTextColor,
-        chartGreenColor,
-        chartBlueColor,
-        chartYellowColor,
-        chartRedColor,
-        graphsBackgroundOpacity,
-        tilesBackgroundOpacity,
-        chartsDividerColor,
     } = props.color
     const {
     } = props.product
@@ -201,6 +168,39 @@ function Login(props) {
                                 >
                                     <Text style={{ color: textColor }}>Login</Text>
                                 </Button>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        marginTop: 15,
+                                        borderColor: 'red', borderWidth: 0,
+                                        justifyContent: 'space-evenly'
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            backgroundColor: fbColor,
+                                            borderRadius: 10,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <FontAwesome name='facebook-f' size={20} color={headerIconColor} />
+                                    </View>
+                                    <View
+                                        style={{
+                                            height: 50,
+                                            width: 50,
+                                            backgroundColor: twitterColor,
+                                            borderRadius: 10,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <FontAwesome name='twitter' size={20} color={headerIconColor} />
+                                    </View>
+                                </View>
                             </View>
                         </View>
                         <Wavy
